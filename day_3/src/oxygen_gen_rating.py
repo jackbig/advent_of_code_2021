@@ -1,18 +1,5 @@
-from collections import namedtuple
 import sys
-
-def read_input(path : str) -> list:
-    with open(path, "r") as input_file:
-        return input_file.readlines()
-
-def convert_to_binary_list(line : str) -> int:
-    binary = []
-    try:
-        for i in range(0, len(line)):
-            binary.append(int(line[i]))
-    except ValueError:
-        pass
-    return binary
+import utilities.input as utils
 
 def count_one_digit(index : int, input : list) -> int:
     count = 0
@@ -53,13 +40,10 @@ def oxygen(input : list, digits_count : int):
         if ones_count < limit:
             most_freq_digit = 0
         zeros, ones = divide(index, oxy_group)
-        #print(index, ones_count, most_freq_digit)
         if most_freq_digit == 1:
             oxy_group = ones
-            #print(oxy_group)
         else:
             oxy_group = zeros
-            #print(oxy_group)
     print(oxy_group)
     print(convert_to_decimal(oxy_group[0]))
 
@@ -81,37 +65,32 @@ def carbon(input : list, digits_count : int):
             if ones_count < limit:
                 most_freq_digit = 1
             zeros, ones = divide(index, group)
-            print("ones: ")
-            print(ones)
-            print("zeros: ")
-            print(zeros)
             if most_freq_digit == 1:
                 group = ones
             else:
                 group = zeros
-            print("group:")
-            print(group)
-            print("-----")
     print(group)
     print(convert_to_decimal(group[0]))
 
 def main():
-    lines = read_input(sys.argv[1])
-    input = [convert_to_binary_list(ln) for ln in lines]
+    lines = utils.read_input(sys.argv[1])
+    input = [utils.convert_to_binary_list(ln) for ln in lines]
     input_count = len(input)
     digits_count = count_digits(input)
+    print("oxygen")
     oxygen(input, digits_count)
-    #carbon(input, digits_count)
+    print("C02")
+    carbon(input, digits_count)
 
 def test_count_digits():
     assert(count_digits([[1, 0, 0]]) == 3)
 
 def test_divide():
-    input = [convert_to_binary_list([1, 0, 0])]
-    input.append(convert_to_binary_list([1, 0, 1]))
-    input.append(convert_to_binary_list([1, 1, 1]))
-    input.append(convert_to_binary_list([0, 0, 1]))
-    input.append(convert_to_binary_list([0, 0, 0]))
+    input = [utils.convert_to_binary_list([1, 0, 0])]
+    input.append(utils.convert_to_binary_list([1, 0, 1]))
+    input.append(utils.convert_to_binary_list([1, 1, 1]))
+    input.append(utils.convert_to_binary_list([0, 0, 1]))
+    input.append(utils.convert_to_binary_list([0, 0, 0]))
     zeros, ones = divide(0, input)
     assert(len(zeros) == 2)
     assert(len(ones) == 3)
