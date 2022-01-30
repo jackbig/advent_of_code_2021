@@ -30,22 +30,35 @@ def most_frequent_digit(digit_counter : int, input_count : int, min : int, max :
         return min
     return max
 
-def oxygen(input : list, digits_count : int):
-    oxy_group = list(input)
-    #carbon_group = list(input)
+def analyze(input : list, digits_count : int, selector):
+    group = list(input)
     for index in range(0, digits_count):
-        ones_count = count_one_digit(index, oxy_group)
-        limit = len(oxy_group) // 2 + len(oxy_group) % 2
-        most_freq_digit = 1
-        if ones_count < limit:
-            most_freq_digit = 0
-        zeros, ones = divide(index, oxy_group)
-        if most_freq_digit == 1:
-            oxy_group = ones
+        if len(group) <= 1:
+            continue
+        ones_count = count_one_digit(index, group)
+        selected_digit = selector(ones_count, len(group))
+        zeros, ones = divide(index, group)
+        if selected_digit == 1:
+            group = ones
         else:
-            oxy_group = zeros
-    print(oxy_group)
-    print(convert_to_decimal(oxy_group[0]))
+            group = zeros
+    print(group)
+    print(convert_to_decimal(group[0]))
+
+# it returns begin or end by checking if value is lower or greater then limit
+def switch(value : int, limit : int, begin : int, end : int) -> int:
+    output = end
+    if value < limit:
+        output = begin
+    return output
+
+def oxygen_digit_selector(ones_count : int, group_count : int) -> int:
+    limit = group_count // 2 + group_count % 2
+    return switch(ones_count, limit, 0, 1)
+
+def carbon_digit_selector(ones_count : int, group_count : int) -> int:
+    limit = group_count // 2 + group_count % 2
+    return switch(ones_count, limit, 1, 0)
 
 def convert_to_decimal(number : list) -> int:
     value = 0
@@ -55,32 +68,15 @@ def convert_to_decimal(number : list) -> int:
         exponent -= 1
     return value
 
-def carbon(input : list, digits_count : int):
-    group = list(input)
-    for index in range(0, digits_count):
-        if len(group) > 1:
-            ones_count = count_one_digit(index, group)
-            limit = len(group) // 2 + len(group) % 2
-            most_freq_digit = 0
-            if ones_count < limit:
-                most_freq_digit = 1
-            zeros, ones = divide(index, group)
-            if most_freq_digit == 1:
-                group = ones
-            else:
-                group = zeros
-    print(group)
-    print(convert_to_decimal(group[0]))
-
 def main():
     lines = utils.read_input(sys.argv[1])
     input = [utils.convert_to_binary_list(ln) for ln in lines]
     input_count = len(input)
     digits_count = count_digits(input)
     print("oxygen")
-    oxygen(input, digits_count)
+    analyze(input, digits_count, oxygen_digit_selector)
     print("C02")
-    carbon(input, digits_count)
+    analyze(input, digits_count, carbon_digit_selector)
 
 def test_count_digits():
     assert(count_digits([[1, 0, 0]]) == 3)
