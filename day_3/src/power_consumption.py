@@ -1,17 +1,5 @@
 import sys
-
-def read_input(path : str) -> list:
-    with open(path, "r") as input_file:
-        return input_file.readlines()
-
-def convert_to_binary_list(line : str) -> int:
-    binary = []
-    try:
-        for i in range(0, len(line)):
-            binary.append(int(line[i]))
-    except ValueError:
-        pass
-    return binary
+import utilities.input as utils
 
 def init_counters(counters : list, number : list) -> list:
     if len(counters) == 0:
@@ -39,11 +27,11 @@ def select_one_digit(count : int, total : int) -> int:
     return 0
 
 def main():
-    lines = read_input(sys.argv[1])
+    lines = utils.read_input(sys.argv[1])
     total = len(lines)
     counters = []
     for ln in lines:        
-        number = convert_to_binary_list(ln)
+        number = utils.convert_to_binary_list(ln)
         counters = init_counters(counters, number)
         counters = update_counters(counters, number)
     gamma = 0
@@ -61,10 +49,10 @@ def main():
 def test_convert_to_binary():
     input = "00100"
     output = [0,0,1,0,0]
-    assert(convert_to_binary_list(input) == output)
+    assert(utils.convert_to_binary_list(input) == output)
     input = "1010"
     output = [1,0,1,0]
-    assert(convert_to_binary_list(input) == output)
+    assert(utils.convert_to_binary_list(input) == output)
 
 def test_init_counters():
     input = [1,1,1]

@@ -1,10 +1,6 @@
 import sys
-
 from geometry import Vector2D, scale, sum, print_vector, magnitude
-
-def read_input(path : str) -> list:
-    with open(path, "r") as input_file:
-        return input_file.readlines()
+import utilities.input as utils
 
 def find_direction(command : str) -> Vector2D:
     if command == "forward":
@@ -24,7 +20,7 @@ def move(line : str):
     return scale(versor, magnitude)
 
 def main():
-    lines = read_input(sys.argv[1])
+    lines = utils.read_input(sys.argv[1])
     input = (ln for ln in lines)
     position = Vector2D(0.0, 0.0)
     for line in input:
