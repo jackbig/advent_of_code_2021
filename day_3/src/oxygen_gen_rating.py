@@ -48,7 +48,10 @@ def oxygen(input : list, digits_count : int):
     #carbon_group = list(input)
     for index in range(0, digits_count):
         ones_count = count_one_digit(index, oxy_group)
-        most_freq_digit = most_frequent_digit(ones_count, len(oxy_group), 0, 1)
+        limit = len(oxy_group) // 2 + len(oxy_group) % 2
+        most_freq_digit = 1
+        if ones_count < limit:
+            most_freq_digit = 0
         zeros, ones = divide(index, oxy_group)
         #print(index, ones_count, most_freq_digit)
         if most_freq_digit == 1:
@@ -58,23 +61,39 @@ def oxygen(input : list, digits_count : int):
             oxy_group = zeros
             #print(oxy_group)
     print(oxy_group)
+    print(convert_to_decimal(oxy_group[0]))
+
+def convert_to_decimal(number : list) -> int:
+    value = 0
+    exponent = len(number) - 1 
+    for digit in number:
+        value += pow(2, exponent) * int(digit)
+        exponent -= 1
+    return value
 
 def carbon(input : list, digits_count : int):
-    oxy_group = list(input)
-    #carbon_group = list(input)
-    print("index, ones, most frq")
+    group = list(input)
     for index in range(0, digits_count):
-        ones_count = count_one_digit(index, oxy_group)
-        most_freq_digit = most_frequent_digit(len(oxy_group) - ones_count, len(oxy_group), 1, 0)
-        zeros, ones = divide(index, oxy_group)
-        print(index, ones_count, most_freq_digit)
-        if most_freq_digit == 1:
-            oxy_group = zeros
-            print(oxy_group)
-        else:
-            oxy_group = ones
-            print(oxy_group)
-    #print(oxy_group)
+        if len(group) > 1:
+            ones_count = count_one_digit(index, group)
+            limit = len(group) // 2 + len(group) % 2
+            most_freq_digit = 0
+            if ones_count < limit:
+                most_freq_digit = 1
+            zeros, ones = divide(index, group)
+            print("ones: ")
+            print(ones)
+            print("zeros: ")
+            print(zeros)
+            if most_freq_digit == 1:
+                group = ones
+            else:
+                group = zeros
+            print("group:")
+            print(group)
+            print("-----")
+    print(group)
+    print(convert_to_decimal(group[0]))
 
 def main():
     lines = read_input(sys.argv[1])
