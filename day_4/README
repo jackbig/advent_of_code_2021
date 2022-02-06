@@ -1,0 +1,7 @@
+TODO: remove all computation to find last. I cannot pass whole input: 
+too much expansive in computation. It's better read all matrices and 
+compute score reading the sequence of input.
+
+If I want to compute score for each matrix with whole input, every time 
+I read a matrix I need to compute score and last input. The next matrix will 
+be a better choice if last input index is lower then the previous.

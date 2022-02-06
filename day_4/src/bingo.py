@@ -44,3 +44,4 @@ def score(input : list, mtx : Matrix) -> int:
     if last is not None:
         output = sum(unmarked(input, mtx)) * last
     return output
+

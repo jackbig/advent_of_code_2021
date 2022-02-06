@@ -51,3 +51,4 @@ def test_score():
     assert(bingo.score([7,11,2,8,5,9], mtx) == (1+3+4+6+10+12)*5)
     assert(bingo.score([7,411,2,8,55,9], mtx) == (1+3+4+5+6+10+11+12)*9)
     assert(bingo.score([2,505,8,11], mtx) == 0)
+    assert(bingo.score([2], mtx) == 0)
