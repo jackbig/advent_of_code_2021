@@ -1,4 +1,4 @@
-from src.matrix import Matrix
+from matrix import Matrix
 
 def find_commons(first : list, second : list) -> list:
     output = []
@@ -16,7 +16,7 @@ def find_last(input : list, sequence : list) -> int:
             last = index
     return input[last]
 
-def bingo(input : list, mtx : Matrix):
+def bingo(input : list, mtx : Matrix) -> list:
     data = []
     for x in input:
         data.append(x)

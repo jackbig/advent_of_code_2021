@@ -39,4 +39,19 @@ class Matrix:
                 equality = False
         return equality
 
+def printMatrix(mtx : 'Matrix') -> str:
+    output = ""
+    for i in range(0, mtx.rows()):
+        is_first = True
+        row = mtx.row(i)
+        for item in row:
+            if is_first:
+                output += str(item)
+                is_first = False
+            else:
+                output += ", " + str(item)
+        output += "\n"
+    return output
+        
+
 
