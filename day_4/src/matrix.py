@@ -27,3 +27,16 @@ class Matrix:
         assert(index < self._columns)        
         return [self._data[i][index] for i in range(0, self._rows)]
 
+    def __eq__(self, __o: 'Matrix') -> bool:
+        if self._rows != __o._rows or self._columns != __o._columns:
+            return False
+        equality = True
+        for i in range(0, self._rows):
+            if self.row(i) != __o.row(i):
+                equality = False
+        for i in range(0, self._columns):
+            if self.column(i) != __o.column(i):
+                equality = False
+        return equality
+
+
